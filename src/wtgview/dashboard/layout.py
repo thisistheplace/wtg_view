@@ -1,12 +1,13 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from .tabs import inputs, monitor, outputs
-
-def layout():
+def layout(tabs):
     """Defines the overall layout of the dashboard.
 
     The layouts of individual panels are defined in subpackages.
+
+    Args:
+        tabs: objects defining tabs
 
     Returns:
         dash.html.Div
@@ -24,11 +25,7 @@ def layout():
             # Holder for figures
             html.Div(
                 dbc.Tabs(
-                [
-                    dbc.Tab(inputs.layout(), label="inputs"),
-                    dbc.Tab(monitor.layout(), label="monitor"),
-                    dbc.Tab(outputs.layout(), label="outputs"),
-                ]
+                    [dbc.Tab(tab.layout, label=tab.name) for tab in tabs]
                 )
             ),
         ],

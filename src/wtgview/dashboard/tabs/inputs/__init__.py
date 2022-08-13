@@ -1,1 +1,1 @@
-from .layout import *
+from .inputs import Inputs

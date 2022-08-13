@@ -1,4 +1,6 @@
 from dash import html
+import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 
 def layout():
     """Defines the layout of the input tab
@@ -15,6 +17,8 @@ def layout():
             UI for monitoring
             """
             ),
+            dcc.Interval(id="progress-interval", n_intervals=0, interval=500),
+            dbc.Progress(id="progress"),
         ],
         style={
             "padding": "30px",

@@ -1,9 +1,9 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from tabs import inputs, monitor, outputs
+from .tabs import inputs, monitor, outputs
 
-def dashboard_layout():
+def layout():
     """Defines the overall layout of the dashboard.
 
     The layouts of individual panels are defined in subpackages.

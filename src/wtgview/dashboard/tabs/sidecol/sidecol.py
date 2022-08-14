@@ -1,7 +1,7 @@
 from .layout import layout
 from ..tabs import TabBase
 
-class Outputs(TabBase):
+class Sidecol(TabBase):
 
     def __init__(self) -> None:
         self._name = str(self.__class__.__name__)

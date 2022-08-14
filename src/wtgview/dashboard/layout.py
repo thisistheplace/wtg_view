@@ -1,6 +1,8 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
+from .tabs import banner, sidecol
+
 def layout(tabs):
     """Defines the overall layout of the dashboard.
 
@@ -15,19 +17,22 @@ def layout(tabs):
     return html.Div(
         children=[
             # Heading data
-            html.H1(children="WTG Flow"),
+            banner.Banner().layout,
             html.Div(
-                children="""
-            workflow for offshore wind turbine simulation
-            """
-            ),
-
-            # Holder for figures
-            html.Div(
-                dbc.Tabs(
-                    [dbc.Tab(tab.layout, label=tab.name) for tab in tabs]
-                )
-            ),
+                children=[
+                    dbc.Row([
+                        dbc.Col(sidecol.Sidecol().layout, width=3),
+                        dbc.Col(
+                            # tabs
+                            html.Div(
+                                dbc.Tabs(
+                                    [dbc.Tab(tab.layout, label=tab.name) for tab in tabs]
+                                )
+                            ), width=9
+                        )
+                    ])
+                ]
+            )
         ],
         style={
             "padding": "30px",

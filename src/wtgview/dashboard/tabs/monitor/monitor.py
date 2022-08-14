@@ -7,8 +7,9 @@ from ..tabs import TabBase
 class Monitor(TabBase):
 
     def __init__(self) -> None:
-        self._name = str(self.__class__.name)
+        self._name = str(self.__class__.__name__)
         self._layout = layout()
+        self._progress = 0
 
     @property
     def layout(self):
@@ -29,23 +30,26 @@ class Monitor(TabBase):
         """
         @app.callback(
             Output("monitor-store", "data"),
+            Output("progress", "style"),
             Input("start", "n_clicks"),
             Input("stop", "n_clicks"),
         )
         def start_stop_monitor(start_clicks, stop_clicks):
             if start_clicks != stop_clicks:
-                return True
+                self._progress = 0
+                return True, {"visibility": "visible"}
             else:
-                return False
+                return False, {"visibility": "hidden"}
 
         @app.callback(
             [Output("progress", "value"), Output("progress", "label")],
             Input("progress-interval", "n_intervals"),
-            Input("monitor-store", "store"),
+            Input("start", "n_clicks"),
         )
-        def update_progress(n, monitoring):
+        def update_progress(n, started):
             # check progress of some background process, in this example we'll just
             # use n_intervals constrained to be in 0-100
-            progress = min(n % 110, 100)
+            progress = min(self._progress + 1, 100)
+            self._progress = progress
             # only add text after 5% progress to ensure text isn't squashed too much
             return progress, f"{progress} %" if progress >= 5 else ""

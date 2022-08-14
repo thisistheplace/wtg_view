@@ -4,7 +4,7 @@ from ..tabs import TabBase
 class Inputs(TabBase):
 
     def __init__(self) -> None:
-        self._name = str(self.__class__.name)
+        self._name = str(self.__class__.__name__)
         self._layout = layout()
 
     @property

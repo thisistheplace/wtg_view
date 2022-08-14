@@ -1,4 +1,5 @@
-from dash import Input, Output
+from operator import truediv
+from dash import Input, Output, State
 
 from .layout import layout
 from ..tabs import TabBase
@@ -27,10 +28,22 @@ class Monitor(TabBase):
             app: Dash.App
         """
         @app.callback(
-            [Output("progress", "value"), Output("progress", "label")],
-            [Input("progress-interval", "n_intervals")],
+            Output("monitor-store", "data"),
+            Input("start", "n_clicks"),
+            Input("stop", "n_clicks"),
         )
-        def update_progress(n):
+        def start_stop_monitor(start_clicks, stop_clicks):
+            if start_clicks != stop_clicks:
+                return True
+            else:
+                return False
+
+        @app.callback(
+            [Output("progress", "value"), Output("progress", "label")],
+            Input("progress-interval", "n_intervals"),
+            Input("monitor-store", "store"),
+        )
+        def update_progress(n, monitoring):
             # check progress of some background process, in this example we'll just
             # use n_intervals constrained to be in 0-100
             progress = min(n % 110, 100)

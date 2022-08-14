@@ -21,7 +21,7 @@ def layout():
                 dbc.Button("Start", id="start", color="success", className="me-1", style={"padding": "20px"}),
                 dbc.Button("Stop", id="stop", color="danger", className="me-1", style={"padding": "20px"}),
             ],
-            style={"padding-bottom": "10px"}
+            style={"paddingBottom": "10px"}
             ),
             dcc.Interval(id="progress-interval", n_intervals=0, interval=500),
             dbc.Progress(id="progress"),

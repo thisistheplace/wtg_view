@@ -16,19 +16,24 @@ def layout(tabs):
     """
     return html.Div(
         children=[
+            dbc.Offcanvas(
+                sidecol.Sidecol().layout,
+                id="sidebar-column",
+                is_open=False,
+            ),
             # Heading data
             banner.Banner().layout,
             html.Div(
                 children=[
                     dbc.Row([
-                        dbc.Col(sidecol.Sidecol().layout, width=3),
                         dbc.Col(
                             # tabs
                             html.Div(
                                 dbc.Tabs(
                                     [dbc.Tab(tab.layout, label=tab.name) for tab in tabs]
                                 )
-                            ), width=9
+                            ),
+                            id="tabs-column"
                         )
                     ])
                 ]

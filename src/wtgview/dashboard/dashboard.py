@@ -1,3 +1,5 @@
+from dash import Input, Output, State
+
 from .layout import layout
 
 from .tabs import inputs, monitor, outputs, tabs
@@ -34,3 +36,13 @@ class Dashboard(tabs.TabBase):
         """
         for tab in self._tabs:
             tab.apply_callbacks(self._app)
+
+        @app.callback(
+            Output("sidebar-column", "is_open"),
+            [Input("sidebar-button", "n_clicks")],
+            [State("sidebar-column", "is_open")],
+        )
+        def toggle_collapse(n, is_open):
+            if n:
+                return not is_open
+            return is_open

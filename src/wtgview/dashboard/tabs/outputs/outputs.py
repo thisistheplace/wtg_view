@@ -44,7 +44,6 @@ class Outputs(TabBase):
         )
         def toggle_collapse(n, json_data):
             # load model data
-            print(json_data)
             if json_data is None:
                 return no_update
             elif json_data == "":

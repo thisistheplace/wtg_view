@@ -86,8 +86,8 @@ def read_model(json_path: str):
     except Exception:
         raise TypeError(f"Provided json is type: {type(json_path)} not a filepath or a dictionary.")
 
-    print("number of nodes:", len(data["nodes"].keys()))
-    print("number of elements:", len(data["elements"].keys()))
+    # print("number of nodes:", len(data["nodes"].keys()))
+    # print("number of elements:", len(data["elements"].keys()))
 
     # generate member objects
     members = {} # key: number, value: object

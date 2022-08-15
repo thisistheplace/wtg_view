@@ -1,4 +1,4 @@
-from dash import html
+from dash import html, dcc
 import dash_bootstrap_components as dbc
 
 from dash_wtgviewer import DashWtgviewer
@@ -61,20 +61,57 @@ def layout():
                 # top: 66 positions the toast below the navbar
                 style={"position": "fixed", "top": 66, "right": 10, "width": 350},
             ),
-            html.Div(
-                dbc.Button("Load model", id="load-model", color="success", className="me-1", style={"padding": "10px"}),
-                style={"paddingTop":"10px", "paddingBottom":"10px"}
-            ),
             dbc.Row([
                 dbc.Col(
-                    # json input
-                    dbc.Textarea(
-                        id="json-input",
-                        valid=True,
-                        className="mb-3",
-                        placeholder="A small, valid Textarea",
-                        style={"height":"100%"}
-                    ),
+                        dbc.Accordion(
+                        [
+                            dbc.AccordionItem(
+                                dbc.DropdownMenu(
+                                    [],
+                                    label="Model"
+                                ),
+                                title="Select model"
+                            ),
+                            dbc.AccordionItem(
+                                dcc.Upload(
+                                    id='upload-data',
+                                    children=html.Div([
+                                        'Drag and Drop or ',
+                                        html.A('Select Files')
+                                    ]),
+                                    style={
+                                        'width': '100%',
+                                        'height': '60px',
+                                        'lineHeight': '60px',
+                                        'borderWidth': '1px',
+                                        'borderStyle': 'dashed',
+                                        'borderRadius': '5px',
+                                        'textAlign': 'center',
+                                        'margin': '10px'
+                                    },
+                                    multiple=False
+                                ),
+                                title="Upload file"
+                            ),
+                            dbc.AccordionItem(
+                                [
+                                    html.Div(
+                                        dbc.Button("Upload JSON", id="load-model", color="success", className="me-1", style={"padding": "10px"}),
+                                        style={"paddingTop":"10px", "paddingBottom":"10px"}
+                                    ),
+                                    # json input
+                                    dbc.Textarea(
+                                        id="json-input",
+                                        valid=True,
+                                        className="mb-3",
+                                        placeholder="A small, valid Textarea",
+                                        style={"height":"100%"}
+                                    ),
+                                ],
+                                title="JSON data input"
+                            ),
+                        ]
+                        ),
                     style={"height":"100%"}
                 ),
                 dbc.Col(

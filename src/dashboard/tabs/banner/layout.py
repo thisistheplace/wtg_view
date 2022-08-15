@@ -19,7 +19,7 @@ def layout():
                             n_clicks=0,
                             style={"zindex": "10", "position":"absolute", "display":"block"}
                         ),
-                        style={"padding":"10px"}
+                        #style={"padding":"10px"}
                     ),
                     dbc.Col(
                         children=[

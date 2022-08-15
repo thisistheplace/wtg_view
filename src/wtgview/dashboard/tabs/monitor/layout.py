@@ -9,13 +9,6 @@ def layout():
     """
     return html.Div(
         children=[
-            # Heading data
-            html.H1(children="Monitor tab"),
-            html.Div(
-                children="""
-            UI for monitoring
-            """
-            ),
             dcc.Store(id='monitor-store', storage_type='session'),
             html.Div(children=[
                 dbc.Button("Start", id="start", color="success", className="me-1", style={"padding": "20px"}),

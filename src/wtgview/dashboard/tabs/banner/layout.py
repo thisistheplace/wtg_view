@@ -24,12 +24,12 @@ def layout():
                     dbc.Col(
                         children=[
                             # Heading data
-                            html.H1(children="WTG Flow", style={"paddingBottom": "10px"}),
-                            html.Div(
-                                children="""
-                            workflow for offshore wind turbine simulation
-                            """
-                            ),
+                            html.H1(children="WTG Flow"),
+                            # html.Div(
+                            #     children="""
+                            # workflow for offshore wind turbine simulation
+                            # """
+                            # ),
                         ],
                         width=9,
                         style={"textAlign": "right"}
@@ -41,6 +41,7 @@ def layout():
             "padding": "30px",
             "paddingLeft":"0px",
             "paddingTop":"15px",
+            "paddingBottom":"15px",
             "height": "100%",
             "width": "100%"
         },

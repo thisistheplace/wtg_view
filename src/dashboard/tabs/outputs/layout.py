@@ -66,13 +66,6 @@ def layout():
                         dbc.Accordion(
                         [
                             dbc.AccordionItem(
-                                dbc.DropdownMenu(
-                                    [],
-                                    label="Model"
-                                ),
-                                title="Select model"
-                            ),
-                            dbc.AccordionItem(
                                 dcc.Upload(
                                     id='upload-data',
                                     children=html.Div([
@@ -94,6 +87,13 @@ def layout():
                                 title="Upload file"
                             ),
                             dbc.AccordionItem(
+                                dbc.DropdownMenu(
+                                    [],
+                                    label="Model"
+                                ),
+                                title="Select model"
+                            ),
+                            dbc.AccordionItem(
                                 [
                                     html.Div(
                                         dbc.Button("Upload JSON", id="load-model", color="success", className="me-1", style={"padding": "10px"}),
@@ -112,14 +112,15 @@ def layout():
                             ),
                         ]
                         ),
-                    style={"height":"100%"}
+                    style={"height":"100%"},
+                    width=4
                 ),
                 dbc.Col(
                     DashWtgviewer(
                         id="viewer",
                         **viewer_data
                     ),
-                    style={"height":"500px"}
+                    style={"height":"500px"},
                 )
             ],
             style={"height":"500px"})

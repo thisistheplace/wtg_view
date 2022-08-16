@@ -3,7 +3,7 @@ import pandas as pd
 
 from .base import BaseChart
 
-class ScatterChart(BaseChart):
+class BarChart(BaseChart):
 
     def update_figure(self, data: pd.DataFrame):
         """Regenerate a figure using new data
@@ -14,5 +14,5 @@ class ScatterChart(BaseChart):
         Return:
             plotly.figure object
         """
-        self._figure = px.scatter(data)
+        self._figure = px.bar(data)
         return self.figure

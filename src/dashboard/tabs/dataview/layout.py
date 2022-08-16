@@ -1,26 +1,41 @@
-from dash import html
+from dash import html, dcc
 import dash_bootstrap_components as dbc
+import pandas as pd
 
-def layout():
+from .charts.base import BaseChart
+
+def layout(id:str, charts:BaseChart, data:pd.DataFrame):
     """Defines the layout of the dataview tab
+
+    Args:
+        id: id to give data store
+        charts: list of BaseChart objects
 
     Returns:
         dash.html div
     """
     return html.Div(
         children=[
+            dcc.Store(id=id, storage_type='session', data=data.to_dict()),
             dbc.Row([
                 dbc.Col(
                     [
-                        dbc.Checklist(
-                            id="select-chart-types",
-                            options=[
-                                {"label": "Scatter", "value": 1},
-                                {"label": "Pie", "value": 2},
-                                {"label": "Histogram", "value": 3},
-                            ],
-                            labelCheckedClassName="text-success",
-                            inputCheckedClassName="border border-success bg-success",
+                        html.Div([
+                            dbc.Switch(
+                                id="select-scatter",
+                                label="Scatter",
+                                value=False,
+                            ),
+                            dbc.Switch(
+                                id="select-pie",
+                                label="Pie",
+                                value=False,
+                            ),
+                            dbc.Switch(
+                                id="select-bar",
+                                label="Histogram",
+                                value=False,
+                            )],
                             style={"paddingTop":"20px", "paddingBottom":"20px"}
                         ),
                         dbc.DropdownMenu(
@@ -32,12 +47,10 @@ def layout():
                     width = 3
                 ),
                 dbc.Col(
-                    [
-                        # selected charts go here
-                    ],
+                    [chart.layout for chart in charts],
                     width=9
                 )
-            ]),
+            ]),     
         ],
         style={
             "padding": "30px",

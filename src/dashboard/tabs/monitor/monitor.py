@@ -34,6 +34,19 @@ class Monitor(TabBase):
             app: Dash.App
         """
         @app.callback(
+            Output("progress-interval", "max_intervals"),
+            Input("start", "n_clicks"),
+            Input("stop", "n_clicks"),
+        )
+        def set_monitor_interval(start_clicks, stop_clicks):
+            # Figure out which button was clicked
+            button_id = ctx.triggered_id 
+            if button_id == "start":
+                return -1
+            else:
+                return 0
+
+        @app.callback(
             Output("monitor-store", "data"),
             Output("progress", "style"),
             Input("start", "n_clicks"),

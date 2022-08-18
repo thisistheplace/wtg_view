@@ -1,9 +1,13 @@
-from dash import Input, Output, State, no_update
+from ast import literal_eval
+import base64
+
+from dash import Input, Output, State, no_update, callback_context, ALL
 
 import uuid
 
 from .fileutils import parse_contents
 from .layout import layout
+from .model import read_model
 from ..tabs import TabBase
 
 class Outputs(TabBase):
@@ -35,8 +39,8 @@ class Outputs(TabBase):
             app: Dash.App
         """
         @app.callback(
-            Output("model-load-error", "is_open"),
-            Output("model-load-error", "children"),
+            Output("user-model-load-error", "is_open"),
+            Output("user-model-load-error", "children"),
             Output(self.id, "ifc_file_contents"),
             Input('upload-data', 'contents'),
             State('upload-data', 'filename'),
@@ -47,4 +51,26 @@ class Outputs(TabBase):
                 ifc_data = parse_contents(file_contents, filename)
                 return False, no_update, ifc_data
             except Exception as e:
+                raise(e)
                 return True, f"Failed to load model:\n{e}", no_update
+
+        @app.callback(
+            Output("default-model-load-error", "is_open"),
+            Output("default-model-load-error", "children"),
+            Output('upload-data', 'contents'),
+            Output('upload-data', 'filename'),
+            Output('select-model', 'label'),
+            Input({'type': 'model-selection', 'index': ALL}, 'n_clicks'),
+            State({'type': 'model-selection', 'index': ALL}, 'children'),
+            prevent_initial_call=True
+        )
+        def update_output(n_clicks, labels):
+            try:
+                button_info = literal_eval(callback_context.triggered[0]["prop_id"].split(".")[0])
+                model_name = labels[button_info["index"]]
+                fname, model = read_model(model_name)
+                model_bytes = base64.b64encode(bytes(model, 'utf-8'))
+                return no_update, no_update, f"none,{str(model_bytes, 'utf-8')}", fname, model_name
+            except Exception as e:
+                raise e
+                return True, f"Failed to load model:\n{e}", no_update, no_update, no_update

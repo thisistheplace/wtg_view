@@ -3,7 +3,19 @@ import dash_bootstrap_components as dbc
 
 from dash_ifc_wtg import DashIfcWtg
 
-from .model import viewer
+from .model import list_model_names
+
+def make_toast(id:str):
+    return dbc.Toast(
+        id=id,
+        header="Model load error",
+        is_open=False,
+        dismissable=True,
+        icon="danger",
+        duration=3000,
+        # top: 66 positions the toast below the navbar
+        style={"position": "fixed", "top": 66, "right": 10, "width": 350},
+    )
 
 def layout(id:str):
     """Defines the layout of the input tab
@@ -13,17 +25,8 @@ def layout(id:str):
     """
     return html.Div(
         children=[
-            dbc.Toast(
-                "",
-                id="model-load-error",
-                header="Model load error",
-                is_open=False,
-                dismissable=True,
-                icon="danger",
-                duration=3000,
-                # top: 66 positions the toast below the navbar
-                style={"position": "fixed", "top": 66, "right": 10, "width": 350},
-            ),
+            make_toast("user-model-load-error"),
+            make_toast("default-model-load-error"),
             dbc.Row([
                 dbc.Col(
                         dbc.Accordion(
@@ -51,7 +54,13 @@ def layout(id:str):
                             ),
                             dbc.AccordionItem(
                                 dbc.DropdownMenu(
-                                    [],
+                                    [
+                                        dbc.DropdownMenuItem(name, id={
+                                            'type': "model-selection",
+                                            'index': idx
+                                        }) for idx, name in enumerate(list_model_names())
+                                    ],
+                                    id="select-model",
                                     label="Model"
                                 ),
                                 title="Select model"

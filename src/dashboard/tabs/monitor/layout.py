@@ -27,7 +27,7 @@ def layout(charts):
             ],
             style={"paddingBottom": "10px", "width": "100%"}
             ),
-            dcc.Interval(id="progress-interval", n_intervals=0, interval=500),
+            dcc.Interval(id="progress-interval", n_intervals=0, interval=500, max_intervals=0),
             dbc.Progress(id="progress"),
             html.Div(
                 id="monitor-charts",

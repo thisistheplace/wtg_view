@@ -1,16 +1,21 @@
 from dash import Input, Output, State, no_update
 
-import json
+import uuid
 
+from .fileutils import parse_contents
 from .layout import layout
-from .model import viewer
 from ..tabs import TabBase
 
 class Outputs(TabBase):
 
     def __init__(self) -> None:
+        self._id = str(uuid.uuid4())
         self._name = str(self.__class__.__name__)
-        self._layout = layout()
+        self._layout = layout(self.id)
+
+    @property
+    def id(self):
+        return self._id
 
     @property
     def layout(self):
@@ -32,25 +37,14 @@ class Outputs(TabBase):
         @app.callback(
             Output("model-load-error", "is_open"),
             Output("model-load-error", "children"),
-            Output("viewer", "members"),
-            Output("viewer", "nacelle"),
-            Output("viewer", "rotor_diameter"),
-            Output("viewer", "num_blades"),
-            Output("viewer", "max"),
-            Output("viewer", "min"),
-            Output("viewer", "values"),
-            [Input("load-model", "n_clicks")],
-            State("json-input", "value")
+            Output(self.id, "ifc_file_contents"),
+            Input('upload-data', 'contents'),
+            State('upload-data', 'filename'),
+            prevent_initial_call=True
         )
-        def toggle_collapse(n, json_data):
-            # load model data
-            if json_data is None:
-                return no_update
-            elif json_data == "":
-                return [True, "Could not load an empty string"] + [no_update] * 7
-            else:
-                try:
-                    model_data = viewer(json.loads(json_data))
-                    return [no_update, no_update] + list(model_data.values())
-                except Exception:
-                    return [True, "Invalid json data"] + [no_update] * 7
+        def update_output(file_contents, filename):
+            try:
+                ifc_data = parse_contents(file_contents, filename)
+                return False, no_update, ifc_data
+            except Exception as e:
+                return True, f"Failed to load model:\n{e}", no_update

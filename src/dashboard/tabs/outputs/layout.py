@@ -1,7 +1,11 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
-from dash_ifc_wtg import DashIfcWtg
+import sys
+sys.path.append("../../dash-ifc-wtg/dash_ifc_wtg")
+sys.path.append("../../dash-ifc-wtg")
+from DashIfcWtg import DashIfcWtg
+#from dash_ifc_wtg import DashIfcWtg
 
 from .model import list_model_names
 

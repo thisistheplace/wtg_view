@@ -22,3 +22,6 @@ docker run -p 8050:8000 wtg_view
 ```
 
 Access at: https://127.0.0.1:8050
+
+Build process based on:
+https://towardsdatascience.com/how-to-deploy-ml-models-using-flask-gunicorn-nginx-docker-9b32055b3d0

@@ -4,15 +4,17 @@ services:
   wtg_view:
     container_name: wtg_view
     restart: always
-    build: ./src
+    build: ./src/app
     ports:
       - "8000:8000"
-    command: gunicorn -w 1 -b 0.0.0.0:8000 wsgi:server
+    command: gunicorn -w 1 -b 0.0.0.0:8000 app:server
   
   nginx:
     container_name: nginx
     restart: always
-    build: ./nginx
+    build:
+      context: ./src
+      dockerfile: ./nginx/Dockerfile
     ports:
       - "80:80"
     depends_on:

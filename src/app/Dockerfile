@@ -3,7 +3,7 @@
 FROM python:3.9-slim-buster
 
 # Copy local code to the container image.
-ENV APP_HOME /app
+ENV APP_HOME src/app
 WORKDIR $APP_HOME
 
 # set environment variables

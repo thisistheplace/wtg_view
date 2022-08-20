@@ -14,7 +14,7 @@ api = Api(server)
 
 class WasmFile(Resource):
     def get(self):
-        response = make_response(read_wasm("assets/web-ifc.wasm"))
+        response = make_response(read_wasm("static/web-ifc.wasm"))
         response.headers["content-type"] = "application/wasm"
         return response
 

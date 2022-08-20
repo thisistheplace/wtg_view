@@ -31,6 +31,11 @@ def layout(id:str):
         children=[
             make_toast("user-model-load-error"),
             make_toast("default-model-load-error"),
+            # Serve local css
+            html.Link(
+                rel='stylesheet',
+                href='/static/css/index.css'
+            ),
             dbc.Row([
                 dbc.Col(
                         dbc.Accordion(
@@ -78,7 +83,9 @@ def layout(id:str):
                     html.Div(
                         DashIfcWtg(f"{id}", ""),
                         style={"padding":"20px", "height":"75vh", "width":"100%"},
-                    )
+                    ),
+                    style={"height":"100%"},
+                    width=8
                 )
             ],
             style={"height":"500px"})
@@ -86,6 +93,7 @@ def layout(id:str):
         style={
             "padding": "30px",
             "height": "100%",
+            "maxWidth": "100%"
         },
     )
 

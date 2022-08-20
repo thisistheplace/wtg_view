@@ -14,7 +14,7 @@ def layout(id:str, charts:BaseChart, data:pd.DataFrame):
     Returns:
         dash.html div
     """
-    return html.Div(
+    return dbc.Container(
         children=[
             dcc.Store(id=id, storage_type='session', data=data.to_dict()),
             dbc.Row([
@@ -44,11 +44,22 @@ def layout(id:str, charts:BaseChart, data:pd.DataFrame):
                             style={"paddingTop":"20px", "paddingBottom":"20px"}
                         )
                     ],
-                    width = 3
+                    width = 2
                 ),
                 dbc.Col(
-                    [chart.layout for chart in charts],
-                    width=9
+                    dbc.Row(
+                        [
+                            dbc.Col(
+                                chart.layout,
+                                id={
+                                    'type': "dataview-chart-column",
+                                    'index': idx
+                                },
+                                width=4
+                            ) for idx, chart in enumerate(charts)
+                        ],
+                    ),
+                    width=10
                 )
             ]),     
         ],

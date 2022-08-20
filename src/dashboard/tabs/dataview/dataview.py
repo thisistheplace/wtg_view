@@ -1,6 +1,8 @@
 from uuid import uuid4
 import pandas as pd
 
+from dash import Input, Output, State, ALL, no_update
+
 from .layout import layout
 from ..tabs import TabBase
 
@@ -58,3 +60,22 @@ class Dataview(TabBase):
         """
         for chart in self.charts:
             chart.apply_callbacks(app)
+
+        @app.callback(
+            Output({'type': 'dataview-chart-column', 'index': ALL}, 'width'),
+            Output({'type': 'dataview-chart-column', 'index': ALL}, 'style'),
+            [Input(chart.id_toggle, "value") for chart in self.charts]
+        )
+        def resize_chart_columns(*values):
+            count_visible = values.count(True)
+            if count_visible == 0:
+                return no_update
+            width = 12 / count_visible
+            widths = [visible * width for visible in values]
+            styles = []
+            for vis in values:
+                if vis:
+                    styles.append({"display":"block"})
+                else:
+                    styles.append({"display":"none"})
+            return [widths] + [styles]

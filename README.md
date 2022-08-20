@@ -8,20 +8,20 @@ The [dash-wtgviewer](https://pypi.org/project/dash-wtgviewer/#description) packa
 
 ## Deployment
 ### Build
-To deploy the dashboard in a Docker container, run the following:
+#### On Google Cloud Platform
+To deploy the dashboard in a Docker container, open terminal within the git repo, run the following:
 
 ```
-docker build -t wtg_view:latest -f build/Dockerfile src
+docker build -t wtg_view_gcp:latest -f src/app/Dockerfile-gcp src/app
 ```
-
-### Run
-To run the docker image:
-
-```
-docker run -p 8050:8000 wtg_view
-```
-
 Access at: https://127.0.0.1:8050
+
+#### With `nginx`
+From within the git repo, open terminal and run:
+
+`bash run-docker.sh`
+
+The app is then accessible at https://127.0.0.1:80
 
 Build process based on:
 https://medium.com/technonerds/a-production-grade-machine-learning-api-using-flask-gunicorn-nginx-and-docker-part-2-c69629199037

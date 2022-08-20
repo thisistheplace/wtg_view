@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  wtg_view:
+    container_name: wtg_view
+    restart: always
+    build: ./src
+    ports:
+      - "8000:8000"
+    command: gunicorn -w 1 -b 0.0.0.0:8000 wsgi:server
+  
+  nginx:
+    container_name: nginx
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - wtg_view

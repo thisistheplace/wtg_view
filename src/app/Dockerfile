@@ -4,8 +4,13 @@ FROM python:3.9-slim-buster
 
 # Copy local code to the container image.
 ENV APP_HOME /app
-ENV PYTHONUNBUFFERED True
 WORKDIR $APP_HOME
+
+# set environment variables
+#   prevents python writing .pyc files
+ENV PYTHONDONTWRITEBYTECODE 1
+#   prevents python buffering stdout and stderr
+ENV PYTHONUNBUFFERED 1
 
 # Install Python dependencies and Gunicorn
 ADD requirements.txt .
@@ -15,10 +20,10 @@ RUN groupadd -r app && useradd -r -g app app
 # Copy the rest of the codebase into the image
 COPY --chown=app:app . ./
 USER app
-EXPOSE 8000
+# EXPOSE 8000
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
 # For environments with multiple CPU cores, increase the number of workers
 # to be equal to the cores available in Cloud Run.
-CMD exec gunicorn --bind 0.0.0.0:8000 --log-level info --workers 1 --threads 8 --timeout 0 app:server
+# CMD exec gunicorn --bind 0.0.0.0:8000 --log-level info --workers 1 --threads 8 --timeout 0 app:server

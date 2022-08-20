@@ -34,7 +34,7 @@ def layout(id:str):
             # Serve local css
             html.Link(
                 rel='stylesheet',
-                href='/static/css/index.css'
+                href='/assets/css/index.css'
             ),
             dbc.Row([
                 dbc.Col(

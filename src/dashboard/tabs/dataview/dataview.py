@@ -1,7 +1,7 @@
 from uuid import uuid4
 import pandas as pd
 
-from dash import Input, Output, State, ALL, no_update
+from dash import Input, Output, ALL, no_update
 
 from .layout import layout
 from ..tabs import TabBase

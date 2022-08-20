@@ -51,7 +51,6 @@ class Outputs(TabBase):
                 ifc_data = parse_contents(file_contents, filename)
                 return False, no_update, ifc_data
             except Exception as e:
-                raise(e)
                 return True, f"Failed to load model:\n{e}", no_update
 
         @app.callback(
@@ -72,5 +71,4 @@ class Outputs(TabBase):
                 model_bytes = base64.b64encode(bytes(model, 'utf-8'))
                 return no_update, no_update, f"none,{str(model_bytes, 'utf-8')}", fname, model_name
             except Exception as e:
-                raise e
                 return True, f"Failed to load model:\n{e}", no_update, no_update, no_update

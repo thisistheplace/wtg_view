@@ -1,13 +1,15 @@
-version: '3'
+version: '3.7'
 
 services:
-  wtg_view:
-    container_name: wtg_view
+  dash:
+    container_name: dash
     restart: always
     build: ./src/app
+    expose:
+      - "8000"
     ports:
       - "8000:8000"
-    command: gunicorn -w 1 -b 0.0.0.0:8000 app:server
+    command: gunicorn -w 1 -b :8000 app:server
   
   nginx:
     container_name: nginx
@@ -15,7 +17,9 @@ services:
     build:
       context: ./src
       dockerfile: ./nginx/Dockerfile
+    expose:
+      - "8080"
     ports:
-      - "80:80"
+      - "80:8080"
     depends_on:
-      - wtg_view
+      - dash

@@ -1,6 +1,8 @@
-from dash import html
+from dash import html, dcc
 
-def layout():
+from dash_react_flowing import DashReactFlowing
+
+def layout(data):
     """Defines the layout of the input tab
 
     Returns:
@@ -8,17 +10,20 @@ def layout():
     """
     return html.Div(
         children=[
-            # Heading data
-            html.H1(children="Inputs tab"),
+            dcc.Store(id='workflow-store', storage_type='session', data=data),
             html.Div(
-                children="""
-            UI for inputs
-            """
+                "Describe your workflow:"
             ),
+            html.Button("Add node", id='add-node', n_clicks=0, className="mb-3"),
+            DashReactFlowing(
+                id="workflow",
+                nodes=data["nodes"],
+                edges=data["edges"]
+            )
         ],
         style={
             "padding": "30px",
-            "height": "100%",
+            "height": "75vh",
         },
     )
 

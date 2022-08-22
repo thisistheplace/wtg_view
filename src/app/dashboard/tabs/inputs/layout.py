@@ -1,4 +1,5 @@
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 
 from dash_react_flowing import DashReactFlowing
 
@@ -12,9 +13,13 @@ def layout(data):
         children=[
             dcc.Store(id='workflow-store', storage_type='session', data=data),
             html.Div(
-                "Describe your workflow:"
+                "Describe your workflow:",
+                style={
+                    "paddingTop": "20xpx",
+                    "paddingBottom": "20px"
+                }
             ),
-            html.Button("Add node", id='add-node', n_clicks=0, className="mb-3"),
+            dbc.Button("Add node", id='add-node', n_clicks=0, className="mb-3"),
             DashReactFlowing(
                 id="workflow",
                 nodes=data["nodes"],
@@ -23,7 +28,7 @@ def layout(data):
         ],
         style={
             "padding": "30px",
-            "height": "75vh",
+            "height": "70vh",
         },
     )
 

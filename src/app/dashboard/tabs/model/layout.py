@@ -42,6 +42,19 @@ def layout(id:str):
                             dbc.Accordion(
                             [
                                 dbc.AccordionItem(
+                                    dbc.DropdownMenu(
+                                        [
+                                            dbc.DropdownMenuItem(name, id={
+                                                'type': "model-selection",
+                                                'index': idx
+                                            }) for idx, name in enumerate(list_model_names())
+                                        ],
+                                        id="select-model",
+                                        label="Model"
+                                    ),
+                                    title="Select model"
+                                ),
+                                dbc.AccordionItem(
                                     dcc.Upload(
                                         id='upload-data',
                                         children=html.Div([
@@ -61,20 +74,7 @@ def layout(id:str):
                                         multiple=False
                                     ),
                                     title="Upload file"
-                                ),
-                                dbc.AccordionItem(
-                                    dbc.DropdownMenu(
-                                        [
-                                            dbc.DropdownMenuItem(name, id={
-                                                'type': "model-selection",
-                                                'index': idx
-                                            }) for idx, name in enumerate(list_model_names())
-                                        ],
-                                        id="select-model",
-                                        label="Model"
-                                    ),
-                                    title="Select model"
-                                ),
+                                )
                             ]
                             ),
                         style={

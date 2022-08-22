@@ -1,6 +1,10 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
+# import sys
+# sys.path.append("../../../dash-react-flowing/dash_react_flowing")
+# sys.path.append("../../../dash-react-flowing")
+# from DashReactFlowing import DashReactFlowing
 from dash_react_flowing import DashReactFlowing
 
 def layout(data):

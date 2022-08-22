@@ -1,111 +1,76 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
+import pandas as pd
 
-# import sys
-# sys.path.append("../../dash-ifc-wtg/dash_ifc_wtg")
-# sys.path.append("../../dash-ifc-wtg")
-# from DashIfcWtg import DashIfcWtg
-from dash_ifc_wtg import DashIfcWtg
+from .charts.base import BaseChart
 
-from .model import list_model_names
+def layout(id:str, charts:BaseChart, data:pd.DataFrame):
+    """Defines the layout of the dataview tab
 
-def make_toast(id:str):
-    return dbc.Toast(
-        id=id,
-        header="Model load error",
-        is_open=False,
-        dismissable=True,
-        icon="danger",
-        duration=3000,
-        # top: 66 positions the toast below the navbar
-        style={"position": "fixed", "top": 66, "right": 10, "width": 350},
-    )
-
-def layout(id:str):
-    """Defines the layout of the input tab
+    Args:
+        id: id to give data store
+        charts: list of BaseChart objects
 
     Returns:
         dash.html div
     """
-    return html.Div(
+    return dbc.Container(
         children=[
-            make_toast("user-model-load-error"),
-            make_toast("default-model-load-error"),
-            # Serve local css
-            html.Link(
-                rel='stylesheet',
-                href='/static/css/index.css'
-            ),
-            dbc.Container([
-                dbc.Row([
-                    dbc.Col(
-                            dbc.Accordion(
-                            [
-                                dbc.AccordionItem(
-                                    dcc.Upload(
-                                        id='upload-data',
-                                        children=html.Div([
-                                            'Drag and Drop or ',
-                                            html.A('Select Files')
-                                        ]),
-                                        style={
-                                            'width': '100%',
-                                            'height': '60px',
-                                            'lineHeight': '60px',
-                                            'borderWidth': '1px',
-                                            'borderStyle': 'dashed',
-                                            'borderRadius': '5px',
-                                            'textAlign': 'center',
-                                            'margin': '10px'
-                                        },
-                                        multiple=False
-                                    ),
-                                    title="Upload file"
-                                ),
-                                dbc.AccordionItem(
-                                    dbc.DropdownMenu(
-                                        [
-                                            dbc.DropdownMenuItem(name, id={
-                                                'type': "model-selection",
-                                                'index': idx
-                                            }) for idx, name in enumerate(list_model_names())
-                                        ],
-                                        id="select-model",
-                                        label="Model"
-                                    ),
-                                    title="Select model"
-                                ),
-                            ]
+            dcc.Store(id=id, storage_type='session', data=data.to_dict()),
+            dbc.Row([
+                dbc.Col(
+                    [
+                        # html.Div([
+                            dbc.Switch(
+                                id="select-scatter",
+                                label="Scatter",
+                                value=False,
                             ),
-                        style={
-                            "height":"100%",
-                            "paddingTop":"10px"
-                        },
-                        lg=4,
-                        sm=12
+                            dbc.Switch(
+                                id="select-pie",
+                                label="Pie",
+                                value=False,
+                            ),
+                            dbc.Switch(
+                                id="select-bar",
+                                label="Histogram",
+                                value=False,
+                            ),
+                            # ],
+                        #     style={"paddingTop":"20px", "paddingBottom":"20px"}
+                        # ),
+                        dbc.DropdownMenu(
+                            [],
+                            label="Select data",
+                            style={"paddingTop":"20px", "paddingBottom":"20px"}
+                        )
+                    ],
+                    lg=2,
+                    sm=12
+
+                ),
+                dbc.Col(
+                    dbc.Row(
+                        [
+                            dbc.Col(
+                                chart.layout,
+                                id={
+                                    'type': "dataview-chart-column",
+                                    'index': idx
+                                },
+                                lg=4,
+                                sm=12
+                            ) for idx, chart in enumerate(charts)
+                        ],
                     ),
-                    dbc.Col(
-                        html.Div(
-                            DashIfcWtg(f"{id}", ""),
-                            style={
-                                "height":"75vh",
-                                "width":"100%",
-                                "paddingTop":"10px"
-                            },
-                        ),
-                        style={"height":"100%"},
-                        lg=8,
-                        sm=12
-                    )
-                ],
-                style={"paddingTop":"20px"})
-            ],
-            style={"padding":"0px"}
-            ),
+                    lg=10,
+                    sm=12
+                )
+            ]),     
         ],
         style={
+            "padding": "30px",
             "height": "100%",
-            "maxWidth": "100%"
         },
     )
 

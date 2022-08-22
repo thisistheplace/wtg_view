@@ -3,18 +3,14 @@ from dash import Input, Output, State, no_update
 import uuid
 
 from .layout import layout
+from .data import read_flowchart, Flowcharts
 from ..tabs import TabBase
-
-INITIAL_DATA = {
-    "nodes": [],
-    "edges": []
-}
 
 class Inputs(TabBase):
 
     def __init__(self) -> None:
         self._name = str(self.__class__.__name__)
-        self._layout = layout(INITIAL_DATA)
+        self._layout = layout(read_flowchart(Flowcharts.DEMO))
 
     @property
     def layout(self):
@@ -49,15 +45,9 @@ class Inputs(TabBase):
             prevent_initial_callback=True
         )
         def nodes_updated(nodes, edges, data):
-            new_nodes = len(nodes) - len(data["nodes"])
-            new_edges = len(edges) - len(data["edges"])
             data["nodes"] = nodes
             data["edges"] = edges
-            if new_edges > 0 or new_nodes > 0:
-                return data
-            else:
-                # Keep positions up to date
-                return data
+            return data
 
         @app.callback(
             Output('workflow', 'nodes'),

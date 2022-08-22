@@ -2,7 +2,7 @@ from dash import Input, Output, no_update, callback_context
 
 from .layout import layout
 
-from .tabs import inputs, monitor, outputs, dataview, tabs
+from .tabs import inputs, monitor, outputs, model, tabs
 
 class Dashboard(tabs.TabBase):
 
@@ -12,8 +12,8 @@ class Dashboard(tabs.TabBase):
         self._tabs = [
             inputs.Inputs(),
             monitor.Monitor(),
-            outputs.Outputs(),
-            dataview.Dataview()
+            model.Model(),
+            outputs.Outputs()
         ]
         self._layout = layout(self._tabs)
         self.apply_callbacks(self._app)

@@ -7,10 +7,10 @@ import uuid
 
 from .fileutils import parse_contents
 from .layout import layout
-from .model import read_model
+from .loader import read_model
 from ..tabs import TabBase
 
-class Outputs(TabBase):
+class Model(TabBase):
 
     def __init__(self) -> None:
         self._id = str(uuid.uuid4())

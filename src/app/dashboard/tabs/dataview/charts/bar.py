@@ -1,10 +1,11 @@
 import plotly.express as px
 import pandas as pd
 
-from .base import BaseChart
+from .base import BaseChart, modify_figure
 
 class BarChart(BaseChart):
 
+    @modify_figure
     def update_figure(self, data: pd.DataFrame):
         """Regenerate a figure using new data
         

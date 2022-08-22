@@ -15,7 +15,7 @@ def layout(data):
             html.Div(
                 "Describe your workflow:",
                 style={
-                    "paddingTop": "20xpx",
+                    "paddingTop": "20px",
                     "paddingBottom": "20px"
                 }
             ),
@@ -27,7 +27,6 @@ def layout(data):
             )
         ],
         style={
-            "padding": "30px",
             "height": "70vh",
         },
     )

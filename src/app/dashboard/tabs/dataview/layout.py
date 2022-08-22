@@ -20,7 +20,7 @@ def layout(id:str, charts:BaseChart, data:pd.DataFrame):
             dbc.Row([
                 dbc.Col(
                     [
-                        html.Div([
+                        # html.Div([
                             dbc.Switch(
                                 id="select-scatter",
                                 label="Scatter",
@@ -35,16 +35,19 @@ def layout(id:str, charts:BaseChart, data:pd.DataFrame):
                                 id="select-bar",
                                 label="Histogram",
                                 value=False,
-                            )],
-                            style={"paddingTop":"20px", "paddingBottom":"20px"}
-                        ),
+                            ),
+                            # ],
+                        #     style={"paddingTop":"20px", "paddingBottom":"20px"}
+                        # ),
                         dbc.DropdownMenu(
                             [],
                             label="Select data",
                             style={"paddingTop":"20px", "paddingBottom":"20px"}
                         )
                     ],
-                    width = 2
+                    lg=2,
+                    sm=12
+
                 ),
                 dbc.Col(
                     dbc.Row(
@@ -55,11 +58,13 @@ def layout(id:str, charts:BaseChart, data:pd.DataFrame):
                                     'type': "dataview-chart-column",
                                     'index': idx
                                 },
-                                width=4
+                                lg=4,
+                                sm=12
                             ) for idx, chart in enumerate(charts)
                         ],
                     ),
-                    width=10
+                    lg=10,
+                    sm=12
                 )
             ]),     
         ],

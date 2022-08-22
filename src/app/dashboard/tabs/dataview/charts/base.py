@@ -4,6 +4,14 @@ from uuid import uuid4
 from dash import dcc, html, Input, Output, no_update
 import pandas as pd
 
+def modify_figure(create_figure, *args, **kwargs):
+    def inner(self, *args, **kwargs):
+        fig = create_figure(self, *args, **kwargs)
+        self.set_legend()
+        self.set_margins()
+        return fig
+    return inner
+
 class BaseChart(ABC):
 
     def __init__(self, id_data:str, id_toggle:str, data:pd.DataFrame=None):
@@ -40,6 +48,24 @@ class BaseChart(ABC):
             figure=self.figure,
             style={"position":"relative"}
         )
+
+    def set_legend(self):
+        self.figure.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        ))
+
+    def set_margins(self):
+        """Sets the margins around the plot (defined in px)"""
+        self.figure.update_layout(margin=dict(
+            b=20,
+            t=100,
+            l=20,
+            r=20
+        ))
 
     def apply_callbacks(self, app):
         """Applies callbacks associated with this chart to the provided app

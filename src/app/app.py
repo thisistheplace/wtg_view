@@ -9,7 +9,13 @@ from dashboard.fileutils import read_wasm
 
 # Serve up wasm file since it doesn't get shipped with dash-ifc-wtg yet
 server = Flask('wtg_view')
-app = Dash(server=server, external_stylesheets=[dbc.themes.FLATLY, dbc.icons.FONT_AWESOME])
+app = Dash(
+    server=server,
+    external_stylesheets=[dbc.themes.FLATLY, dbc.icons.FONT_AWESOME],
+    meta_tags=[
+        {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+    ]    
+)
 api = Api(server)
 
 class WasmFile(Resource):

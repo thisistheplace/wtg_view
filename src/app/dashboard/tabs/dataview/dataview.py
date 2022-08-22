@@ -62,7 +62,7 @@ class Dataview(TabBase):
             chart.apply_callbacks(app)
 
         @app.callback(
-            Output({'type': 'dataview-chart-column', 'index': ALL}, 'width'),
+            Output({'type': 'dataview-chart-column', 'index': ALL}, 'lg'),
             Output({'type': 'dataview-chart-column', 'index': ALL}, 'style'),
             [Input(chart.id_toggle, "value") for chart in self.charts]
         )

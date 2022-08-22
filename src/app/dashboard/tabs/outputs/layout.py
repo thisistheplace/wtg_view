@@ -36,62 +36,72 @@ def layout(id:str):
                 rel='stylesheet',
                 href='/static/css/index.css'
             ),
-            dbc.Row([
-                dbc.Col(
-                        dbc.Accordion(
-                        [
-                            dbc.AccordionItem(
-                                dcc.Upload(
-                                    id='upload-data',
-                                    children=html.Div([
-                                        'Drag and Drop or ',
-                                        html.A('Select Files')
-                                    ]),
-                                    style={
-                                        'width': '100%',
-                                        'height': '60px',
-                                        'lineHeight': '60px',
-                                        'borderWidth': '1px',
-                                        'borderStyle': 'dashed',
-                                        'borderRadius': '5px',
-                                        'textAlign': 'center',
-                                        'margin': '10px'
-                                    },
-                                    multiple=False
+            dbc.Container([
+                dbc.Row([
+                    dbc.Col(
+                            dbc.Accordion(
+                            [
+                                dbc.AccordionItem(
+                                    dcc.Upload(
+                                        id='upload-data',
+                                        children=html.Div([
+                                            'Drag and Drop or ',
+                                            html.A('Select Files')
+                                        ]),
+                                        style={
+                                            'width': '100%',
+                                            'height': '60px',
+                                            'lineHeight': '60px',
+                                            'borderWidth': '1px',
+                                            'borderStyle': 'dashed',
+                                            'borderRadius': '5px',
+                                            'textAlign': 'center',
+                                            'margin': '10px'
+                                        },
+                                        multiple=False
+                                    ),
+                                    title="Upload file"
                                 ),
-                                title="Upload file"
-                            ),
-                            dbc.AccordionItem(
-                                dbc.DropdownMenu(
-                                    [
-                                        dbc.DropdownMenuItem(name, id={
-                                            'type': "model-selection",
-                                            'index': idx
-                                        }) for idx, name in enumerate(list_model_names())
-                                    ],
-                                    id="select-model",
-                                    label="Model"
+                                dbc.AccordionItem(
+                                    dbc.DropdownMenu(
+                                        [
+                                            dbc.DropdownMenuItem(name, id={
+                                                'type': "model-selection",
+                                                'index': idx
+                                            }) for idx, name in enumerate(list_model_names())
+                                        ],
+                                        id="select-model",
+                                        label="Model"
+                                    ),
+                                    title="Select model"
                                 ),
-                                title="Select model"
+                            ]
                             ),
-                        ]
-                        ),
-                    style={"height":"100%"},
-                    width=4
-                ),
-                dbc.Col(
-                    html.Div(
-                        DashIfcWtg(f"{id}", ""),
-                        style={"padding":"20px", "height":"75vh", "width":"100%"},
+                        style={
+                            "height":"100%",
+                            "paddingTop":"10px"
+                        },
+                        lg=4,
+                        sm=12
                     ),
-                    style={"height":"100%"},
-                    width=8
-                )
-            ],
-            style={"height":"500px"})
+                    dbc.Col(
+                        html.Div(
+                            DashIfcWtg(f"{id}", ""),
+                            style={
+                                "height":"75vh",
+                                "width":"100%",
+                                "paddingTop":"10px"
+                            },
+                        ),
+                        style={"height":"100%"},
+                        lg=8,
+                        sm=12
+                    )
+                ],
+                style={"paddingTop":"20px"})
+            ]),
         ],
         style={
-            "padding": "30px",
             "height": "100%",
             "maxWidth": "100%"
         },

@@ -1,4 +1,6 @@
+from turtle import heading
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 
 def layout(figure):
     """Defines the layout of a scatter chart
@@ -6,17 +8,12 @@ def layout(figure):
     Returns:
         dash.html div
     """
-    return html.Div(
-        children=[
-            dcc.Graph(
-                id="monitor-figure",
-                figure=figure
-            )
-        ],
+    return dcc.Graph(
+        id="monitor-figure",
+        figure=figure,
         style={
-            "padding": "30px",
-            "height": "100%",
-            "width": "100%"
-        },
+            "width":"100%",
+            "height":"100%"
+        }
     )
 

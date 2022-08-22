@@ -29,13 +29,16 @@ def layout(charts):
             ),
             dcc.Interval(id="progress-interval", n_intervals=0, interval=500, max_intervals=0),
             dbc.Progress(id="progress"),
-            html.Div(
+            dbc.Container(
                 id="monitor-charts",
-                children=[chart.layout for chart in charts]
+                children=[chart.layout for chart in charts],
+                style={
+                    "padding":"0px"
+                }
             )
         ],
         style={
-            "padding": "30px",
+            "padding": "10px",
             "height": "100%",
             "width": "100%"
         },

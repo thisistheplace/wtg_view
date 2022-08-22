@@ -1,0 +1,167 @@
+{
+    "edges": [
+        {
+            "id": "e1-2",
+            "source": "1",
+            "target": "2"
+        },
+        {
+            "id": "e2-3",
+            "source": "2",
+            "target": "3"
+        },
+        {
+            "id": "e3-4",
+            "source": "3",
+            "target": "4"
+        },
+        {
+            "id": "e4-5",
+            "source": "4",
+            "target": "5"
+        },
+        {
+            "id": "e5-6",
+            "source": "5",
+            "target": "6"
+        },
+        {
+            "id": "e5-7",
+            "source": "5",
+            "target": "7"
+        }
+    ],
+    "nodes": [
+        {
+            "data": {
+                "label": "Select DLCs"
+            },
+            "height": 40,
+            "id": "1",
+            "position": {
+                "x": 50,
+                "y": 50
+            },
+            "type": "input",
+            "width": 150
+        },
+        {
+            "data": {
+                "label": "Generate Loads"
+            },
+            "dragging": false,
+            "height": 40,
+            "id": "2",
+            "position": {
+                "x": 107,
+                "y": 119
+            },
+            "positionAbsolute": {
+                "x": 107,
+                "y": 119
+            },
+            "selected": false,
+            "type": "defaultNode",
+            "width": 150
+        },
+        {
+            "data": {
+                "label": "Run Simulations"
+            },
+            "dragging": false,
+            "height": 40,
+            "id": "3",
+            "position": {
+                "x": 176,
+                "y": 186
+            },
+            "positionAbsolute": {
+                "x": 176,
+                "y": 186
+            },
+            "selected": false,
+            "style": {
+                "border": "1px solid #777",
+                "padding": 10
+            },
+            "type": "defaultNode",
+            "width": 150
+        },
+        {
+            "data": {
+                "label": "Post-processing: FLS"
+            },
+            "dragging": false,
+            "height": 40,
+            "id": "4",
+            "position": {
+                "x": 123,
+                "y": 258
+            },
+            "positionAbsolute": {
+                "x": 123,
+                "y": 258
+            },
+            "selected": false,
+            "type": "defaultNode",
+            "width": 150
+        },
+        {
+            "data": {
+                "label": "Post-processing: ULS"
+            },
+            "dragging": false,
+            "height": 40,
+            "id": "5",
+            "position": {
+                "x": 207,
+                "y": 324
+            },
+            "positionAbsolute": {
+                "x": 207,
+                "y": 324
+            },
+            "selected": false,
+            "type": "defaultNode",
+            "width": 150
+        },
+        {
+            "data": {
+                "label": "Output: 3D model"
+            },
+            "dragging": false,
+            "height": 40,
+            "id": "6",
+            "position": {
+                "x": 300,
+                "y": 428
+            },
+            "positionAbsolute": {
+                "x": 300,
+                "y": 428
+            },
+            "selected": true,
+            "type": "output",
+            "width": 150
+        },
+        {
+            "data": {
+                "label": "Output: Graphs"
+            },
+            "dragging": false,
+            "height": 40,
+            "id": "7",
+            "position": {
+                "x": 109,
+                "y": 428
+            },
+            "positionAbsolute": {
+                "x": 109,
+                "y": 428
+            },
+            "selected": false,
+            "type": "output",
+            "width": 150
+        }
+    ]
+}

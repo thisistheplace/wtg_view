@@ -7,16 +7,27 @@ def layout():
     Returns:
         dash.html.Div
     """
-    return html.Div(
-        children=[
+    return dbc.Container(
+        [
+            html.Div(
+                dbc.Button(
+                    html.I(className="fa-solid fa-xmark"),
+                    id="sidebar-close",
+                    className="mb-3",
+                    n_clicks=0,
+                    style={"zindex": "10"}
+                ),
+                style={"position":"absolute", "display":"block", "top":"0px", "right":"0px", "padding":"20px"}
+            ),
             # Heading data
             html.Div(
-                children="Account"
+                "In progress...",
+                style={"padding": "30px"}
             ),
         ],
         style={
-            "padding": "30px",
             "height": "100%",
-            "width": "100%"
+            "width": "100%",
+            "maxWidth":"100%"
         },
     )

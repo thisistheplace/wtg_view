@@ -27,7 +27,7 @@ def layout(data):
             )
         ],
         style={
-            "height": "70vh",
+            "height": "60vh",
         },
     )
 

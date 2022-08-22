@@ -99,7 +99,9 @@ def layout(id:str):
                     )
                 ],
                 style={"paddingTop":"20px"})
-            ]),
+            ],
+            style={"padding":"0px"}
+            ),
         ],
         style={
             "height": "100%",

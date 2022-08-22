@@ -23,20 +23,23 @@ def layout(tabs):
             ),
             # Heading data
             banner.Banner().layout,
-            html.Div(
-                children=[
-                    dbc.Row([
-                        dbc.Col(
-                            # tabs
-                            html.Div(
-                                dbc.Tabs(
-                                    [dbc.Tab(tab.layout, label=tab.name) for tab in tabs]
-                                )
-                            ),
-                            id="tabs-column"
-                        )
-                    ])
-                ]
+            dbc.Container(
+                dbc.Row([
+                    dbc.Col(
+                        dbc.Tabs(
+                            [
+                                dbc.Tab(
+                                    tab.layout,
+                                    label=tab.name,
+                                    label_style={
+                                        "paddingLeft": "0.5rem",
+                                        "paddingRight": "0.5rem"
+                                    }
+                                ) for tab in tabs]
+                        ),
+                        id="tabs-column"
+                    )
+                ])
             )
         ],
         style={

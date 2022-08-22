@@ -14,22 +14,15 @@ def layout():
                     dbc.Col(
                         dbc.Button(
                             html.I(className="fa fa-bars"),
-                            id="sidebar-button",
+                            id="sidebar-open",
                             className="mb-3",
                             n_clicks=0,
                             style={"zindex": "10", "position":"absolute", "display":"block"}
                         ),
-                        #style={"padding":"10px"}
                     ),
                     dbc.Col(
                         children=[
-                            # Heading data
                             html.H1(children="WTG Flow"),
-                            # html.Div(
-                            #     children="""
-                            # workflow for offshore wind turbine simulation
-                            # """
-                            # ),
                         ],
                         width=9,
                         style={"textAlign": "right"}

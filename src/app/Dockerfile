@@ -17,6 +17,11 @@ ADD requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt && pip install --no-cache-dir gunicorn
 RUN groupadd -r app && useradd -r -g app app
 
+# Install tkinter to satisfy ploty dependency
+RUN apt-get -qq -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
+        tk-dev
+
 # Copy the rest of the codebase into the image
 COPY . ./
 

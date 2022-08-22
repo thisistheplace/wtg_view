@@ -16,6 +16,12 @@ ENV PYTHONUNBUFFERED 1
 ADD requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt && pip install --no-cache-dir gunicorn
 
+# Install tkinter to satisfy ploty dependency
+RUN apt-get -qq -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
+        tk-dev
+
+
 # Copy the rest of the codebase into the image
 COPY . ./
 EXPOSE 8000

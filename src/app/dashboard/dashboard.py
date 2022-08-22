@@ -1,4 +1,4 @@
-from dash import Input, Output, State
+from dash import Input, Output, no_update, callback_context
 
 from .layout import layout
 
@@ -40,10 +40,15 @@ class Dashboard(tabs.TabBase):
 
         @app.callback(
             Output("sidebar-column", "is_open"),
-            [Input("sidebar-button", "n_clicks")],
-            [State("sidebar-column", "is_open")],
+            [Input("sidebar-open", "n_clicks"),
+            Input("sidebar-close", "n_clicks")],
+            prevent_initial_callback=True
         )
-        def toggle_collapse(n, is_open):
-            if n:
-                return not is_open
-            return is_open
+        def toggle_collapse(n_open, n_close):
+            button_id = callback_context.triggered[0]["prop_id"].split(".")[0]
+            if button_id == "sidebar-open":
+                return True
+            elif button_id == "sidebar-close":
+                return False
+            else:
+                return no_update

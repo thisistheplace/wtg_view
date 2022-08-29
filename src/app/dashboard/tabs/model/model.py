@@ -1,5 +1,6 @@
 from ast import literal_eval
 import base64
+import time
 
 from dash import Input, Output, State, no_update, callback_context, ALL
 
@@ -39,6 +40,29 @@ class Model(TabBase):
             app: Dash.App
         """
         @app.callback(
+            Output("wheel-interval", "max_intervals"),
+            Input('upload-data', 'contents'),
+            Input(self.id, 'ifc_file_contents'),
+            State("upload-data", "filename"),
+            State(self.id, 'ifc_file_contents'),
+            prevent_initial_call=True
+        )
+        def check_loader(file_contents, new_contents, filename, old_data):
+            if parse_contents(file_contents, filename) == old_data:
+                return 0
+            else:
+                return -1
+
+        @app.callback(
+            Output("wheel-interval", "interval"),
+            Input('wheel-interval', 'n_intervals'),
+            prevent_initial_call=True
+        )
+        def model_loading_wheel(n):
+            time.sleep(0.5)
+            return no_update
+
+        @app.callback(
             Output("user-model-load-error", "is_open"),
             Output("user-model-load-error", "children"),
             Output(self.id, "ifc_file_contents"),
@@ -46,7 +70,7 @@ class Model(TabBase):
             State('upload-data', 'filename'),
             prevent_initial_call=True
         )
-        def update_output(file_contents, filename):
+        def model_to_ifc(file_contents, filename):
             try:
                 ifc_data = parse_contents(file_contents, filename)
                 return False, no_update, ifc_data
@@ -63,7 +87,7 @@ class Model(TabBase):
             State({'type': 'model-selection', 'index': ALL}, 'children'),
             prevent_initial_call=True
         )
-        def update_output(n_clicks, labels):
+        def download_model(n_clicks, labels):
             try:
                 button_info = literal_eval(callback_context.triggered[0]["prop_id"].split(".")[0])
                 model_name = labels[button_info["index"]]

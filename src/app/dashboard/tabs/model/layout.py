@@ -86,12 +86,23 @@ def layout(id:str):
                     ),
                     dbc.Col(
                         html.Div(
-                            DashIfcWtg(f"{id}", ""),
-                            style={
-                                "height":"75vh",
-                                "width":"100%",
-                                "paddingTop":"10px"
-                            },
+                            dcc.Loading(
+                                id="load-model",
+                                children=[
+                                    html.Div(
+                                        [
+                                            DashIfcWtg(f"{id}", ""),
+                                            dcc.Interval(id="wheel-interval", interval=500, max_intervals=0),
+                                        ],
+                                        style={
+                                            "height":"75vh",
+                                            "width":"100%",
+                                            "paddingTop":"10px"
+                                        },
+                                    ),
+                                ],
+                                type="circle",
+                            ),
                         ),
                         style={"height":"100%"},
                         lg=8,
